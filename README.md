@@ -15,3 +15,9 @@ This bot will query OP.GG for statistics of users who opt-in
 - Unit test everything
 - Bring on second developer to help write/review code
 - Have code reviewed and interated on
+
+
+### Resources
+ - https://github.com/Javacord/Javacord#ide-setup
+ - https://javacord.org/wiki/getting-started/welcome/
+ - https://medium.freecodecamp.org/how-to-securely-store-api-keys-4ff3ea19ebda
