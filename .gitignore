@@ -2,6 +2,9 @@
 # Created by https://www.gitignore.io/api/git,java,gradle,windows,intellij
 # Edit at https://www.gitignore.io/?templates=git,java,gradle,windows,intellij
 
+### Resources ###
+dinner-bot.config
+
 ### Git ###
 # Created by git for backups. To disable backups in Git:
 # $ git config --global mergetool.keepBackup false
