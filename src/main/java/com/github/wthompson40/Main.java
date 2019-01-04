@@ -1,5 +1,7 @@
 package com.github.wthompson40;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
 
@@ -14,12 +16,15 @@ import java.util.Properties;
 public class Main {
 
     private static final String fileName = "dinner-bot.config";
+    private static final Logger logger = LogManager.getLogger(Main.class.getName());
 
     public static void main(String[] args) {
         // Insert your bot's token here
         String token = readProperties("token");
 
         DiscordApi api = new DiscordApiBuilder().setToken(token).login().join();
+
+        logger.info("Successfully join text channel");
 
         // Add a listener which answers with "Pong!" if someone writes "!ping"
         api.addMessageCreateListener(event -> {
