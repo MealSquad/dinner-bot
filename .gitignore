@@ -3,7 +3,7 @@
 # Edit at https://www.gitignore.io/?templates=git,java,gradle,windows,intellij
 
 ### Resources ###
-dinner-bot.config
+application.conf
 
 ### Git ###
 # Created by git for backups. To disable backups in Git:
@@ -30,6 +30,7 @@ dinner-bot.config
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
+.idea/codeStyles/
 
 # Generated files
 .idea/**/contentModel.xml
