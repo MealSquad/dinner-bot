@@ -15,7 +15,7 @@ import java.util.Properties;
 
 public class Main {
 
-    private static final String fileName = "dinner-bot.config";
+    private static final String fileName = "application.conf";
     private static final Logger logger = LogManager.getLogger(Main.class.getName());
 
     public static void main(String[] args) {
