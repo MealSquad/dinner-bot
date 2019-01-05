@@ -37,7 +37,7 @@ public class Main {
         System.out.println("You can invite the bot by using the following url: " + api.createBotInvite());
     }
 
-    private static String readProperties(String key) {
+    public static String readProperties(String key) {
         Properties properties = new Properties();
         String requestedProperty = "";
         try {
