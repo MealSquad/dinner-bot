@@ -1,8 +1,6 @@
 package com.github.mealsquad.model;
 
-import com.github.mautini.pubgjava.api.PubgClient;
 import com.github.mautini.pubgjava.model.match.Match;
-import com.github.mautini.pubgjava.model.participant.ParticipantAttributes;
 import com.github.mautini.pubgjava.model.participant.ParticipantStats;
 import com.github.mautini.pubgjava.model.player.Player;
 import com.github.mealsquad.filter.ChickenDinnerFilter;

@@ -1,9 +1,6 @@
 package com.github.mealsquad.poller;
 
 import com.github.mautini.pubgjava.api.PubgClient;
-import com.github.mautini.pubgjava.model.match.MatchResponse;
-import com.github.mautini.pubgjava.model.participant.ParticipantAttributes;
-import com.github.mealsquad.filter.AbstractFilter;
 
 import java.util.List;
 

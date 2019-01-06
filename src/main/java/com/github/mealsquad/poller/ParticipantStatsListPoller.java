@@ -21,7 +21,7 @@ public class ParticipantStatsListPoller extends AbstractPoller<ParticipantStats>
 
     private static final Logger logger = LogManager.getLogger();
     private final Set<Match> matchList;
-    AbstractFilter<ParticipantAttributes, ParticipantStats> filter;
+    private final AbstractFilter<ParticipantAttributes, ParticipantStats> filter;
 
     public ParticipantStatsListPoller(Set<Match> matchList, AbstractFilter<ParticipantAttributes, ParticipantStats> filter) {
         this.matchList = matchList;

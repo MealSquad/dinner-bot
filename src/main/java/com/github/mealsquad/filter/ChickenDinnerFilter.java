@@ -1,8 +1,5 @@
 package com.github.mealsquad.filter;
 
-import com.github.mautini.pubgjava.model.generic.Entity;
-import com.github.mautini.pubgjava.model.match.MatchResponse;
-import com.github.mautini.pubgjava.model.participant.Participant;
 import com.github.mautini.pubgjava.model.participant.ParticipantAttributes;
 import com.github.mautini.pubgjava.model.participant.ParticipantStats;
 import com.github.mealsquad.model.User;

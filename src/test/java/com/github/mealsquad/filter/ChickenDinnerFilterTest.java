@@ -1,7 +1,5 @@
 package com.github.mealsquad.filter;
 
-import com.github.mautini.pubgjava.model.match.MatchResponse;
-import com.github.mautini.pubgjava.model.participant.Participant;
 import com.github.mautini.pubgjava.model.participant.ParticipantAttributes;
 import com.github.mautini.pubgjava.model.participant.ParticipantStats;
 import com.github.mealsquad.model.User;
@@ -17,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 @RunWith(JUnit4.class)
@@ -34,7 +31,7 @@ public class ChickenDinnerFilterTest {
     private ParticipantAttributes invalidParticipant;
 
     @Before
-    public void setup() {
+    public void initialize() {
         List<User> users = new ArrayList<>();
         users.add(new User("NutellaFrisbee", 0, 0, 0));
         sut = new ChickenDinnerFilter(users);
