@@ -34,7 +34,7 @@ public class ParticipantStatsListPoller extends AbstractPoller<ParticipantStats>
         List<String> matchIds = matchList.stream().map(Match::getId).collect(Collectors.toList());
         try {
             for (String id : matchIds) {
-                matchResponses.add(getPb().getMatch(PlatformRegion.PC_NA, id));
+                matchResponses.add(getClient().getMatch(PlatformRegion.PC_NA, id));
             }
         } catch (PubgClientException e) {
             logger.error("Failed to retrieve match responses");

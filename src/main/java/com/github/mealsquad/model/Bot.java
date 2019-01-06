@@ -15,11 +15,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Bot implements Runnable {
+public class Bot {
 
     private final Logger logger = LogManager.getLogger();
+    private final String token;
     private List<User> users;
-    private String token;
 
     public Bot(List<User> users, String token) {
         this.users = users;
@@ -34,8 +34,7 @@ public class Bot implements Runnable {
         return token;
     }
 
-    @Override
-    public void run() {
+    public void start() {
         DiscordApi api = new DiscordApiBuilder().setToken(token).login().join();
 
         logger.info("Successfully join text channel");

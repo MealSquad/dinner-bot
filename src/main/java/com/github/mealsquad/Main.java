@@ -15,7 +15,7 @@ public class Main {
 
     public static void main(String[] args) {
         Bot dinner = new Bot(getUsers(), readProperties("token"));
-        dinner.run();
+        dinner.start();
     }
 
     public static String readProperties(String key) {
@@ -26,7 +26,7 @@ public class Main {
 
     private static List<User> getUsers() {
         // This should read an on disk file with usernames who opt-in.  A player opting in should also update the on disk file.
-        User me = new User("NutellaFrisbee", 0, 0 , 0);
+        User me = new User("NutellaFrisbee", 0, 0, 0);
         List<User> userList = new ArrayList<User>();
         userList.add(me);
         return userList;

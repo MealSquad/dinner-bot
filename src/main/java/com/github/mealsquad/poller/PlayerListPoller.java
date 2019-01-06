@@ -23,7 +23,7 @@ public class PlayerListPoller extends AbstractPoller<Player> {
     public List<Player> poll() {
         List<Player> players = new ArrayList<>();
         try {
-            players = getPb().getPlayersByNames(Platform.STEAM, users.stream().map(User::getName).toArray(String[]::new)).getData();
+            players = getClient().getPlayersByNames(Platform.STEAM, users.stream().map(User::getName).toArray(String[]::new)).getData();
         } catch(PubgClientException e) {
             logger.error("Failure to retrieve players");
             e.printStackTrace();

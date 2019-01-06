@@ -6,13 +6,9 @@ import java.util.List;
 
 public abstract class AbstractPoller<T> {
 
-    private PubgClient pb;
+    private static final PubgClient pb = new PubgClient();
 
-    public AbstractPoller() {
-        this.pb = new PubgClient();
-    };
-
-    protected PubgClient getPb() {
+    protected PubgClient getClient() {
         return pb;
     }
 
