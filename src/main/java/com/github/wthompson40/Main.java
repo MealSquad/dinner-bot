@@ -1,7 +1,7 @@
 package com.github.wthompson40;
 
-import com.github.wthompson40.Models.Bot;
-import com.github.wthompson40.Models.User;
+import com.github.wthompson40.model.Bot;
+import com.github.wthompson40.model.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

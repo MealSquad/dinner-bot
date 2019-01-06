@@ -1,4 +1,4 @@
-package com.github.wthompson40.Models;
+package com.github.wthompson40.model;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
