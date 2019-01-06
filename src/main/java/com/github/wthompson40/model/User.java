@@ -1,4 +1,4 @@
-package com.github.wthompson40.Models;
+package com.github.wthompson40.model;
 
 public class User {
 

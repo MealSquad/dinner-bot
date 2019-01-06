@@ -1,40 +1,27 @@
 package com.github.wthompson40;
 
+import com.github.wthompson40.model.Bot;
+import com.github.wthompson40.model.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.javacord.api.DiscordApi;
-import org.javacord.api.DiscordApiBuilder;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.InputMismatchException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Properties;
 
 public class Main {
 
     private static final String fileName = "application.conf";
-    private static final Logger logger = LogManager.getLogger(Main.class.getName());
+    private static final Logger logger = LogManager.getLogger(Main.class);
 
     public static void main(String[] args) {
-        // Insert your bot's token here
-        String token = readProperties("token");
-
-        DiscordApi api = new DiscordApiBuilder().setToken(token).login().join();
-
-        logger.info("Successfully join text channel");
-
-        // Add a listener which answers with "Pong!" if someone writes "!ping"
-        api.addMessageCreateListener(event -> {
-            if (event.getMessage().getContent().equalsIgnoreCase("!ping")) {
-                event.getChannel().sendMessage("Pong!");
-            }
-        });
-
-        // Print the invite url of your bot
-        System.out.println("You can invite the bot by using the following url: " + api.createBotInvite());
+        Bot dinner = new Bot(getUsers(), readProperties("token"), readProperties("apiKey"));
+        dinner.run();
     }
 
     public static String readProperties(String key) {
@@ -48,9 +35,16 @@ public class Main {
             properties.load(is);
             requestedProperty = properties.getProperty(key);
         } catch (IOException e) {
+            logger.error(String.format("Failed to read property: [%s]", key));
             e.printStackTrace();
         }
+        logger.info(String.format("Reading in configuration property: [%s] = %s", key, requestedProperty));
         return requestedProperty;
+    }
+
+    private static List<User> getUsers() {
+        // This should read an on disk file with usernames who opt-in.  A player opting in should also update the on disk file.
+        return new ArrayList<>();
     }
 
 }
