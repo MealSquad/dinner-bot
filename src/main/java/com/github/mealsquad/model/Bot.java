@@ -48,7 +48,7 @@ public class Bot {
         // Add a listener which answers with "Pong!" if someone writes "!ping"
         api.addMessageCreateListener(event -> {
             if (event.getMessage().getContent().equalsIgnoreCase("!ping")) {
-                event.getChannel().sendMessage(String.format("In most recent chicken dinner game, Drake_Akrillain got %s kills!", participantStats.get(0).getKills().toString()));
+                event.getChannel().sendMessage(String.format("In most recent chicken dinner game, NutellaFrisbee got %s kills!", participantStats.get(0).getKills().toString()));
             }
         });
     }

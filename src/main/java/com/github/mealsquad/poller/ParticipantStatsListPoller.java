@@ -9,9 +9,11 @@ import com.github.mautini.pubgjava.model.participant.Participant;
 import com.github.mautini.pubgjava.model.participant.ParticipantAttributes;
 import com.github.mautini.pubgjava.model.participant.ParticipantStats;
 import com.github.mealsquad.filter.AbstractFilter;
+import javafx.util.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -41,11 +43,12 @@ public class ParticipantStatsListPoller extends AbstractPoller<ParticipantStats>
             e.printStackTrace();
         }
 
-        List<ParticipantAttributes> participantAttributes = new ArrayList<>();
+        List<Pair<LocalDateTime, ParticipantAttributes>> participantAttributes = new ArrayList<>();
         for (MatchResponse matchResponse : matchResponses) {
             for (Entity entity : matchResponse.getIncluded()) {
                 if (entity.getType().equalsIgnoreCase("participant")) {
-                    participantAttributes.add(((Participant) entity).getParticipantAttributes());
+                    participantAttributes.add(new Pair<>(matchResponse.getData().getMatchAttributes().getCreatedAt().toLocalDateTime(),
+                            ((Participant) entity).getParticipantAttributes()));
                 }
             }
         }

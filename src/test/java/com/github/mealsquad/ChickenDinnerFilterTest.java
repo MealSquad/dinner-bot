@@ -1,8 +1,10 @@
-package com.github.mealsquad.filter;
+package com.github.mealsquad;
 
 import com.github.mautini.pubgjava.model.participant.ParticipantAttributes;
 import com.github.mautini.pubgjava.model.participant.ParticipantStats;
+import com.github.mealsquad.filter.ChickenDinnerFilter;
 import com.github.mealsquad.model.User;
+import javafx.util.Pair;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -11,6 +13,7 @@ import org.junit.runners.JUnit4;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +32,8 @@ public class ChickenDinnerFilterTest {
     // Mocks
     private ParticipantAttributes validParticipant;
     private ParticipantAttributes invalidParticipant;
+
+    private final LocalDateTime validDate = LocalDateTime.now();
 
     @Before
     public void initialize() {
@@ -52,9 +57,9 @@ public class ChickenDinnerFilterTest {
     @Test
     public void testFilter() {
         // Mock a List<MatchResponses> with size 2.
-        List<ParticipantAttributes> participantAttributes = new ArrayList<>();
-        participantAttributes.add(validParticipant);
-        participantAttributes.add(invalidParticipant);
+        List<Pair<LocalDateTime, ParticipantAttributes>> participantAttributes = new ArrayList<>();
+        participantAttributes.add(new Pair<>(validDate, validParticipant));
+        participantAttributes.add(new Pair<>(validDate, invalidParticipant));
 
         List<ParticipantStats> participantStats = sut.filter(participantAttributes);
 
