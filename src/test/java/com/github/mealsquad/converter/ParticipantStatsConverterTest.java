@@ -2,13 +2,10 @@ package com.github.mealsquad.converter;
 
 import com.github.mautini.pubgjava.model.participant.ParticipantStats;
 import com.github.mealsquad.model.RelevantInfo;
-import javafx.util.Pair;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-
-import java.time.LocalDateTime;
 
 import static org.junit.Assert.assertEquals;
 
