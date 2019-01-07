@@ -1,8 +1,7 @@
-package com.github.mealsquad;
+package com.github.mealsquad.filter;
 
 import com.github.mautini.pubgjava.model.participant.ParticipantAttributes;
 import com.github.mautini.pubgjava.model.participant.ParticipantStats;
-import com.github.mealsquad.filter.ChickenDinnerFilter;
 import com.github.mealsquad.model.User;
 import javafx.util.Pair;
 import org.junit.Before;
