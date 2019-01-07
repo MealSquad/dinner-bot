@@ -52,6 +52,7 @@ public class ParticipantStatsListPoller extends AbstractPoller<ParticipantStats>
                 }
             }
         }
+        // Also filter on time from last dinner-board update - only include participantStats which satisfy this
         return filter.filter(participantAttributes);
     }
 }

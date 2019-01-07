@@ -20,11 +20,12 @@ public class ParticipantStatsConverterTest {
     @Before
     public void initialize() {
         participantStats = new ParticipantStats();
+        participantStats.setWinPlace(1);
         participantStats.setKills(2);
-        participantStats.setWinPlace(2);
         participantStats.setDamageDealt(110.1);
+        participantStats.setName("NutellaFrisbee");
 
-        relevantInfo = new RelevantInfo(2, 2, 110.1);
+        relevantInfo = new RelevantInfo("NutellaFrisbee", 2, 1, 2, 110,0);
     }
 
     @Test

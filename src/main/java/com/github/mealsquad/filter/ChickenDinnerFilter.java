@@ -26,14 +26,29 @@ public class ChickenDinnerFilter extends AbstractFilter<ParticipantAttributes, P
 
         // TODO include LocalDateTime in sorting of filteredResultsList / filter based on it
         List<ParticipantStats> filteredResultsList = new ArrayList<>();
+        logger.info(String.format("Size of list to filter: %s", toFilter.size()));
         for (Pair<LocalDateTime, ParticipantAttributes> pair : toFilter) {
             ParticipantAttributes participantAttributes = pair.getValue();
-            if (participantAttributes.getParticipantStats().getWinPlace().equals(Integer.valueOf(1))
-                    && users.stream().map(User::getName).collect(Collectors.toList()).contains(participantAttributes.getParticipantStats().getName())) {
+            if (isChickenDinner(participantAttributes) && participantStatsOfPlayerInUserlist(participantAttributes) && validMatchDate()) {
                 filteredResultsList.add(participantAttributes.getParticipantStats());
                 logger.info(String.format("Adding participant attributes for %s", participantAttributes.getParticipantStats().getName()));
             }
         }
+        logger.info(String.format("Size of list after filtering: %s", filteredResultsList.size()));
+
         return filteredResultsList;
+    }
+
+    private boolean isChickenDinner(ParticipantAttributes participantAttributes) {
+        return participantAttributes.getParticipantStats().getWinPlace().equals(1);
+    }
+
+    private boolean participantStatsOfPlayerInUserlist(ParticipantAttributes participantAttributes) {
+        return users.stream().map(User::getName).collect(Collectors.toList()).contains(participantAttributes.getParticipantStats().getName());
+    }
+
+    // TODO figure out exact filtering cases based on last update to dinner-board and which ReleventInfo's should be included in this update
+    private boolean validMatchDate() {
+        return true;
     }
 }
