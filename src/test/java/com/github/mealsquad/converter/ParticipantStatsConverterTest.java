@@ -16,7 +16,6 @@ import static org.junit.Assert.assertEquals;
 public class ParticipantStatsConverterTest {
 
     private final ParticipantStatsConverter sut = new ParticipantStatsConverter();
-    private final LocalDateTime timeOfMatch = LocalDateTime.now();
     private ParticipantStats participantStats;
     private RelevantInfo relevantInfo;
 
@@ -27,12 +26,12 @@ public class ParticipantStatsConverterTest {
         participantStats.setWinPlace(2);
         participantStats.setDamageDealt(110.1);
 
-        relevantInfo = new RelevantInfo(timeOfMatch, 2, 2, 110.1);
+        relevantInfo = new RelevantInfo(2, 2, 110.1);
     }
 
     @Test
     public void testConverter() {
-        assertEquals(relevantInfo, sut.apply(new Pair<>(timeOfMatch, participantStats)));
+        assertEquals(relevantInfo, sut.apply(participantStats));
     }
 
 }

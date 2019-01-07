@@ -1,24 +1,17 @@
 package com.github.mealsquad.model;
 
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class RelevantInfo {
 
-    private LocalDateTime timeOfMatch;
     private int kills;
     private int rank;
     private double damangeDealt;
 
-    public RelevantInfo(LocalDateTime timeOfMatch, int kills, int rank, double damangeDealt) {
-        this.timeOfMatch = timeOfMatch;
+    public RelevantInfo(int kills, int rank, double damangeDealt) {
         this.kills = kills;
         this.rank = rank;
         this.damangeDealt = damangeDealt;
-    }
-
-    public LocalDateTime getTimeOfMatch() {
-        return timeOfMatch;
     }
 
     public int getKills() {
@@ -40,12 +33,11 @@ public class RelevantInfo {
         RelevantInfo that = (RelevantInfo) o;
         return kills == that.kills &&
                 rank == that.rank &&
-                Double.compare(that.damangeDealt, damangeDealt) == 0 &&
-                Objects.equals(timeOfMatch, that.timeOfMatch);
+                Double.compare(that.damangeDealt, damangeDealt) == 0;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(timeOfMatch, kills, rank, damangeDealt);
+        return Objects.hash(kills, rank, damangeDealt);
     }
 }
