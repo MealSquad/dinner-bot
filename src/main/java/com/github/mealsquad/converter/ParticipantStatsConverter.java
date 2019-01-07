@@ -3,6 +3,7 @@ package com.github.mealsquad.converter;
 import com.github.mautini.pubgjava.model.participant.ParticipantStats;
 import com.github.mealsquad.model.RelevantInfo;
 import com.google.common.base.Function;
+
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 
