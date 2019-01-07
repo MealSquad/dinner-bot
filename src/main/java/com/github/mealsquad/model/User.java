@@ -1,4 +1,4 @@
-package com.github.wthompson40.model;
+package com.github.mealsquad.model;
 
 public class User {
 
