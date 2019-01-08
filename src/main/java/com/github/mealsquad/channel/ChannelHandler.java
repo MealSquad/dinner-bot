@@ -24,16 +24,14 @@ public class ChannelHandler {
 
     public ChannelHandler(DiscordApi api) {
         this.api = api;
-        this.inputChannel = ConfigReader.readProperties("channel");
-        this.outputChannel = ConfigReader.readProperties("output");
+        this.inputChannel = ConfigReader.readProperties("inputChannel");
+        this.outputChannel = ConfigReader.readProperties("outputChannel");
     }
 
     public DinnerBoard getCurrentDinnerBoard() {
         try {
             List<String> rawDinnerBoard = splitDinnerBoard(new ArrayList<>(api.getTextChannelsByName(inputChannel)).get(0).getMessages(1).get().getNewestMessage().get().getContent());
-            DinnerBoardGenerator dbg = new DinnerBoardGenerator();
-            DinnerBoard visual = dbg.apply(rawDinnerBoard);
-            return visual;
+            return new DinnerBoardGenerator().apply(rawDinnerBoard);
         } catch (InterruptedException e) {
             logger.fatal("Failure to retrieve dinner-board");
             e.printStackTrace();
@@ -64,11 +62,11 @@ public class ChannelHandler {
         User me = new User("NutellaFrisbee");
         User kent = new User("StygianWinter");
         User ricky = new User("Drake_Akrillain");
-        User bryson = new User("Holytankman");
+        User jon = new User("nauseated_gerbil");
         userList.add(me);
         userList.add(kent);
         userList.add(ricky);
-        userList.add(bryson);
+        userList.add(jon);
 
         //return users.stream().map(user -> new User(user, "TEST")).collect(Collectors.toList());
 

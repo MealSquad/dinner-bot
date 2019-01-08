@@ -17,13 +17,13 @@ public class DinnerBoardGenerator implements Function<List<String>, DinnerBoard>
 
         List<String> header = strings.subList(0, 6);
 
-        //user data list into 6 object long arrays to be converted into RelevantInfoObjects.
+        // User data list into 6 object long arrays to be converted into RelevantInfoObjects.
         List<String> userData = strings.subList(6, strings.size());
         Map<User, RelevantInfo> dinnerInfo = new HashMap<>();
 
-        // Not foolproof.  MUST fix
+        // Check edge cases
         for (int i = 0; i + 6 <= userData.size(); i = i + 6) {
-            List<String> iso = userData.subList(i, i+6);
+            List<String> iso = userData.subList(i, i + 6);
             dinnerInfo.put(new User(userData.get(i)), rig.apply(iso));
         }
         return new DinnerBoard(dinnerInfo, header);
