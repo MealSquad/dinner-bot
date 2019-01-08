@@ -1,32 +1,29 @@
 package com.github.mealsquad.model;
 
+import java.util.Objects;
+
 public class User {
 
     private String name;
-    private int kills;
-    private int damage;
-    private double kilometers;
 
-    public User(String name, int kills, int damage, double kilometers) {
+    public User(String name) {
         this.name = name;
-        this.kills = kills;
-        this.damage = damage;
-        this.kilometers = kilometers;
     }
 
     public String getName() {
         return name;
     }
 
-    public int getKills() {
-        return kills;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(name, user.name);
     }
 
-    public int getDamage() {
-        return damage;
-    }
-
-    public double getKilometers() {
-        return kilometers;
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }
