@@ -27,8 +27,16 @@ public class Main {
     private static List<User> getUsers() {
         // This should read an on disk file with usernames who opt-in.  A player opting in should also update the on disk file.
         User me = new User("NutellaFrisbee", 0, 0, 0);
+        User kent = new User("StygianWinter", 0, 0, 0);
+        User ricky = new User("Drake_Akrillain", 0, 0, 0);
+        User jon = new User("nauseated_gerbil", 0, 0, 0);
+        User bryson = new User("Holytankman", 0, 0, 0);
         List<User> userList = new ArrayList<User>();
         userList.add(me);
+        userList.add(kent);
+        userList.add(ricky);
+        userList.add(jon);
+        userList.add(bryson);
         return userList;
     }
 
