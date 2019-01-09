@@ -45,6 +45,9 @@ public class RelevantInfo {
     }
 
     public RelevantInfo add(RelevantInfo other) {
+        if (!this.username.equals(other.username)) {
+            throw new UnsupportedOperationException("Cannot add two RelevantInfo's with differing usernames");
+        }
         return new RelevantInfo(this.username,
                 this.kills + other.kills,
                 this.wins + other.wins,
@@ -69,5 +72,17 @@ public class RelevantInfo {
     @Override
     public int hashCode() {
         return Objects.hash(username, kills, wins, topKills, topHitPoints, dionDinners);
+    }
+
+    @Override
+    public String toString() {
+        return "RelevantInfo{" +
+                "username='" + username + '\'' +
+                ", kills=" + kills +
+                ", wins=" + wins +
+                ", topKills=" + topKills +
+                ", topHitPoints=" + topHitPoints +
+                ", dionDinners=" + dionDinners +
+                '}';
     }
 }

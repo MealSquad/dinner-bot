@@ -37,7 +37,7 @@ public class ChickenDinnerFilterTest {
     @Before
     public void initialize() {
         List<User> users = new ArrayList<>();
-        users.add(new User("NutellaFrisbee", 0, 0, 0));
+        users.add(new User("NutellaFrisbee"));
         sut = new ChickenDinnerFilter(users);
 
         // Mocks
