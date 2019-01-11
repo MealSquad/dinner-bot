@@ -3,7 +3,6 @@ package com.github.mealsquad.model;
 import com.github.mautini.pubgjava.model.match.Match;
 import com.github.mautini.pubgjava.model.participant.ParticipantStats;
 
-import com.github.mealsquad.board.DinnerBoard;
 import com.github.mealsquad.converter.ParticipantStatsConverter;
 import com.github.mealsquad.filter.ChickenDinnerFilter;
 import com.github.mealsquad.poller.ParticipantStatsListPoller;

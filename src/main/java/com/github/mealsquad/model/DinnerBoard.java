@@ -1,7 +1,4 @@
-package com.github.mealsquad.board;
-
-import com.github.mealsquad.model.RelevantInfo;
-import com.github.mealsquad.model.User;
+package com.github.mealsquad.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;

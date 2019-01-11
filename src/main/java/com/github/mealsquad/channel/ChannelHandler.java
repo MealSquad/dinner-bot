@@ -1,6 +1,6 @@
 package com.github.mealsquad.channel;
 
-import com.github.mealsquad.board.DinnerBoard;
+import com.github.mealsquad.model.DinnerBoard;
 import com.github.mealsquad.generator.DinnerBoardGenerator;
 import com.github.mealsquad.model.User;
 import com.github.mealsquad.utility.ConfigReader;
