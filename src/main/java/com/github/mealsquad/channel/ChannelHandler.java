@@ -4,6 +4,7 @@ import com.github.mealsquad.board.DinnerBoard;
 import com.github.mealsquad.generator.DinnerBoardGenerator;
 import com.github.mealsquad.model.User;
 import com.github.mealsquad.utility.ConfigReader;
+import com.jakewharton.fliptables.FlipTable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.javacord.api.DiscordApi;
@@ -12,11 +13,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 public class ChannelHandler {
 
+    private final String DINNER_BOARD_REGEX = "[^a-zA-Z0-9#]+ | ^[# of Dion Dinners] | ^[Top DPS/Game] | ^[Top Kills]";
+    private final String BOOTSTRAP_DINNER_BOARD_REGEX = "-|---|\n";
     private final Logger logger = LogManager.getLogger();
     private DiscordApi api;
     private String inputChannel;
@@ -32,10 +34,7 @@ public class ChannelHandler {
         try {
             List<String> rawDinnerBoard = splitDinnerBoard(new ArrayList<>(api.getTextChannelsByName(inputChannel)).get(0).getMessages(1).get().getNewestMessage().get().getContent());
             return new DinnerBoardGenerator().apply(rawDinnerBoard);
-        } catch (InterruptedException e) {
-            logger.fatal("Failure to retrieve dinner-board");
-            e.printStackTrace();
-        } catch (ExecutionException e) {
+        } catch (Exception e) {
             logger.fatal("Failure to retrieve dinner-board");
             e.printStackTrace();
         }
@@ -43,33 +42,26 @@ public class ChannelHandler {
     }
 
     private List<String> splitDinnerBoard(String board) {
-        return Arrays.stream(board.split("-|---|\\n")).map(String::trim).filter(elem -> !elem.isEmpty()).collect(Collectors.toList());
+        boolean bootstrapBoard = !board.contains("`");
+        List<String> extractStats = Arrays.stream(board.replaceAll(bootstrapBoard ? BOOTSTRAP_DINNER_BOARD_REGEX : DINNER_BOARD_REGEX, "+").split("[+]")).map(String::trim).filter(elem -> !elem.isEmpty()).collect(Collectors.toList());
+        return bootstrapBoard ? extractStats : extractStats.subList(0, extractStats.size() - 1);
     }
 
     public void postUpdatedDinnerBoard(DinnerBoard update) {
-        DinnerBoard newDinnerBoard = update.add(getCurrentDinnerBoard());
-        new ArrayList<>(api.getTextChannelsByName(outputChannel)).get(0).sendMessage(newDinnerBoard.toString());
+        DinnerBoard preview = getCurrentDinnerBoard();
+        DinnerBoard newDinnerBoard = preview.add(update);
+
+        // Format table
+        String[] headers = newDinnerBoard.getHeader();
+        String[][] view = newDinnerBoard.to2dArray();
+        new ArrayList<>(api.getTextChannelsByName(outputChannel)).get(0).sendMessage(wrapInCodeBlock(FlipTable.of(headers, view)));
+    }
+
+    private String wrapInCodeBlock(String string) {
+        return "```" + string + "```";
     }
 
     public List<User> getUsers() {
-        //DinnerBoard currentBoard = getCurrentDinnerBoard();
-
-        // List<String> users = currentBoard.subList(6, currentBoard.size() - 1).stream().filter(item -> item.matches("^[a-zA-Z]+$")).collect(Collectors.toList());
-
-        // Dummy hardcoded list in meantime
-
-        List<User> userList = new ArrayList<>();
-        User me = new User("NutellaFrisbee");
-        User kent = new User("StygianWinter");
-        User ricky = new User("Drake_Akrillain");
-        User jon = new User("nauseated_gerbil");
-        userList.add(me);
-        userList.add(kent);
-        userList.add(ricky);
-        userList.add(jon);
-
-        //return users.stream().map(user -> new User(user, "TEST")).collect(Collectors.toList());
-
-        return userList;
+        return getCurrentDinnerBoard().getDinnerBoard().keySet().stream().collect(Collectors.toList());
     }
 }

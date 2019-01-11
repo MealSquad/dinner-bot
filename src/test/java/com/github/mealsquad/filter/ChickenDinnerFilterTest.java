@@ -13,6 +13,7 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +34,7 @@ public class ChickenDinnerFilterTest {
     private ParticipantAttributes invalidParticipant;
 
     private final LocalDateTime validDate = LocalDateTime.now();
+    private final LocalDateTime invalidDate = LocalDateTime.now().minus(25, ChronoUnit.HOURS);
 
     @Before
     public void initialize() {
@@ -64,5 +66,16 @@ public class ChickenDinnerFilterTest {
 
         // Assert only one set of participant stats (the valid one) passes through the filter
         assertEquals(1, participantStats.size());
+    }
+
+    @Test
+    public void testMatchWithInvalidDateExpectNoUpdate() {
+        List<Pair<LocalDateTime, ParticipantAttributes>> participantAttributes = new ArrayList<>();
+        participantAttributes.add(new Pair<>(invalidDate, validParticipant));
+        participantAttributes.add(new Pair<>(invalidDate, invalidParticipant));
+
+        List<ParticipantStats> participantStats = sut.filter(participantAttributes);
+
+        assertEquals(0, participantStats.size());
     }
 }

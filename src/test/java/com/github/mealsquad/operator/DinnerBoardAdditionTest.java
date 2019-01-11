@@ -63,11 +63,4 @@ public class DinnerBoardAdditionTest {
     public void testDinnerBoardAddition() {
         assertEquals(expected, dinnerBoard1.add(dinnerBoard2));
     }
-
-    @Test(expected = UnsupportedOperationException.class)
-    public void testUnsupportedOperation() {
-        RelevantInfo unsupported = new RelevantInfo("Will", 1, 2, 1, 2, 1);
-        dinnerBoard1.getDinnerBoard().put(new User(unsupported.getUsername()), unsupported);
-        dinnerBoard1.add(dinnerBoard2);
-    }
 }

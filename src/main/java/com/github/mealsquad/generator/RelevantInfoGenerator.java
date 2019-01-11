@@ -11,7 +11,8 @@ public class RelevantInfoGenerator implements Function<List<String>, RelevantInf
     // TODO make this not terrible and horrible
     @Override
     public RelevantInfo apply(List<String> strings) {
-        List<Integer> ints = strings.subList(1, strings.size()).stream().map(Integer::valueOf).collect(Collectors.toList());
-        return new RelevantInfo(strings.get(0), ints.get(0), ints.get(1), ints.get(2), ints.get(3), ints.get(4));
+        Integer[] ints = new Integer[5];
+        strings.subList(1, strings.size()).stream().map(Integer::valueOf).collect(Collectors.toList()).toArray(ints);
+        return new RelevantInfo(strings.get(0), ints);
     }
 }
