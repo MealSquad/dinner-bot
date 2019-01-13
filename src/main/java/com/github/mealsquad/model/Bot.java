@@ -3,7 +3,6 @@ package com.github.mealsquad.model;
 import com.github.mautini.pubgjava.model.match.Match;
 import com.github.mautini.pubgjava.model.participant.ParticipantStats;
 
-import com.github.mealsquad.board.DinnerBoard;
 import com.github.mealsquad.converter.ParticipantStatsConverter;
 import com.github.mealsquad.filter.ChickenDinnerFilter;
 import com.github.mealsquad.poller.ParticipantStatsListPoller;
@@ -20,6 +19,7 @@ import org.apache.logging.log4j.Logger;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -28,6 +28,7 @@ import java.util.Set;
 
 public class Bot {
 
+    private final List<String> headerInfo = Arrays.asList("Order", "Kills", "Wins", "Top Kills", "Top DPS/Game", "# of Dion Dinners");
     private final Logger logger = LogManager.getLogger();
     private final ChannelHandler channelHandler;
     private final DiscordApi api;
@@ -44,6 +45,8 @@ public class Bot {
     public void start() {
         logger.info("Successfully join text channel");
 
+        // Create bot life-cycle to run this querying once per day
+
         // Query for update to dinner-board
         PlayerListPoller playerListPoller = new PlayerListPoller(users);
         Set<Match> matchSet = new HashSet<>();
@@ -55,20 +58,26 @@ public class Bot {
         SetMultimap<String, RelevantInfo> userSpecificRelevantInfo = HashMultimap.create();
         ParticipantStatsConverter psc = new ParticipantStatsConverter();
         participantStats.stream().map(stats -> psc.apply(stats)).forEach(relevantInfo -> userSpecificRelevantInfo.put(relevantInfo.getUsername(), relevantInfo));
-        Map<String, RelevantInfo> boardUpdate = new HashMap<>();
-        userSpecificRelevantInfo.keySet().stream().forEach(key -> boardUpdate.put(key, new RelevantInfo(key, 0, 0, 0, 0, 0)));
-        for (String key : boardUpdate.keySet()) {
+        Map<User, RelevantInfo> boardUpdate = new HashMap<>();
+        userSpecificRelevantInfo.keySet().stream().forEach(key -> boardUpdate.put(new User(key), new RelevantInfo(key, 0, 0, 0, 0, 0)));
+        for (User key : boardUpdate.keySet()) {
             RelevantInfo currentInfo = boardUpdate.get(key);
-            Set<RelevantInfo> updatedInfos = userSpecificRelevantInfo.get(key);
+            Set<RelevantInfo> updatedInfos = userSpecificRelevantInfo.get(key.getName());
             for (RelevantInfo ri : updatedInfos) {
                 currentInfo = currentInfo.add(ri);
             }
             boardUpdate.put(key, currentInfo);
         }
+        DinnerBoard update = new DinnerBoard(boardUpdate, headerInfo);
 
         // Parse the dinner-board for current state of the world
 
+        DinnerBoard stateOfTheWorld = channelHandler.getCurrentDinnerBoard();
+        logger.info(stateOfTheWorld);
+
         // Update the dinner board
+
+        channelHandler.postUpdatedDinnerBoard(update);
 
         // Replace this with a module or class which handles all user input / bot output. Essentially a CLI
         // Add a listener which answers with "Pong!" if someone writes "!ping"
@@ -79,9 +88,6 @@ public class Bot {
             }
         });
 
-        DinnerBoard stateOfTheWorld = channelHandler.getCurrentDinnerBoard();
-        logger.info(stateOfTheWorld);
 
-        channelHandler.postUpdatedDinnerBoard(stateOfTheWorld);
     }
 }

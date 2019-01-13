@@ -1,6 +1,6 @@
 package com.github.mealsquad.operator;
 
-import com.github.mealsquad.board.DinnerBoard;
+import com.github.mealsquad.model.DinnerBoard;
 import com.github.mealsquad.model.RelevantInfo;
 import com.github.mealsquad.model.User;
 import org.junit.Before;
@@ -62,12 +62,5 @@ public class DinnerBoardAdditionTest {
     @Test
     public void testDinnerBoardAddition() {
         assertEquals(expected, dinnerBoard1.add(dinnerBoard2));
-    }
-
-    @Test(expected = UnsupportedOperationException.class)
-    public void testUnsupportedOperation() {
-        RelevantInfo unsupported = new RelevantInfo("Will", 1, 2, 1, 2, 1);
-        dinnerBoard1.getDinnerBoard().put(new User(unsupported.getUsername()), unsupported);
-        dinnerBoard1.add(dinnerBoard2);
     }
 }

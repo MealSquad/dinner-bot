@@ -1,13 +1,12 @@
-package com.github.mealsquad.board;
-
-import com.github.mealsquad.model.RelevantInfo;
-import com.github.mealsquad.model.User;
+package com.github.mealsquad.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class DinnerBoard {
@@ -36,14 +35,21 @@ public class DinnerBoard {
         return dinnerBoard;
     }
 
-    // Think about different cases related to different size dinner-boards
+    public String[] getHeader() {
+        String[] arr = new String[6];
+        header.toArray(arr);
+        return arr;
+    }
+
+    // ORDER MATTERS:  current.add(update)
+    // TODO Should fix this code to work in either direction
     public DinnerBoard add(DinnerBoard other) {
-        if (dinnerBoard.size() != other.dinnerBoard.size()) {
-            throw new UnsupportedOperationException("Unequal sized dinner boards cannot be added");
-        }
+        // Perhaps have checks for user in an update who is not already in the board?  When a player is added to board, new dinner board should be
+        Set<User> intersection = new HashSet<>(this.dinnerBoard.keySet());
+        intersection.retainAll(other.dinnerBoard.keySet());
         Map<User, RelevantInfo> newBoard = new HashMap<>();
         this.dinnerBoard.keySet().stream()
-                .forEach(user -> newBoard.put(user, this.dinnerBoard.get(user).add(other.dinnerBoard.get(user))));
+                .forEach(user -> newBoard.put(user, intersection.contains(user) ? this.dinnerBoard.get(user).add(other.dinnerBoard.get(user)) : this.dinnerBoard.get(user)));
         return new DinnerBoard(newBoard, this.header);
     }
 
@@ -73,5 +79,14 @@ public class DinnerBoard {
                 "dinnerBoard=" + display +
                 ", header=" + header +
                 '}';
+    }
+
+    public String[][] to2dArray() {
+        String[][] arr = new String[dinnerBoard.size()][];
+        int i = 0;
+        for (User user : dinnerBoard.keySet()) {
+            arr[i++] = dinnerBoard.get(user).toArray();
+        }
+        return arr;
     }
 }

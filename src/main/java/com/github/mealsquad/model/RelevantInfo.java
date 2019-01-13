@@ -11,6 +11,10 @@ public class RelevantInfo {
     private int topHitPoints;
     private int dionDinners;
 
+    public RelevantInfo(String username, Integer[] stats) {
+        this(username, stats[0], stats[1], stats[2], stats[3], stats[4]);
+    }
+
     public RelevantInfo(String username, int kills, int wins, int topKills, int topHitPoints, int dionDinners) {
         this.username = username;
         this.kills = kills;
@@ -84,5 +88,10 @@ public class RelevantInfo {
                 ", topHitPoints=" + topHitPoints +
                 ", dionDinners=" + dionDinners +
                 '}';
+    }
+
+    public String[] toArray() {
+        return  new String[]{username, String.valueOf(kills), String.valueOf(wins),
+                String.valueOf(topKills), String.valueOf(topHitPoints), String.valueOf(dionDinners)};
     }
 }

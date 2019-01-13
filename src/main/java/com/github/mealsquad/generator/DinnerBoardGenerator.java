@@ -1,6 +1,6 @@
 package com.github.mealsquad.generator;
 
-import com.github.mealsquad.board.DinnerBoard;
+import com.github.mealsquad.model.DinnerBoard;
 import com.github.mealsquad.model.RelevantInfo;
 import com.github.mealsquad.model.User;
 

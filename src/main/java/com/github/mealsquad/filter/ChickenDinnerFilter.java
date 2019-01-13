@@ -8,13 +8,15 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ChickenDinnerFilter extends AbstractFilter<ParticipantAttributes, ParticipantStats> {
+public class ChickenDinnerFilter implements AbstractFilter<ParticipantAttributes, ParticipantStats> {
 
     private static final Logger logger = LogManager.getLogger();
+    private final LocalDateTime previousUpdateTime = LocalDateTime.now().minus(24, ChronoUnit.HOURS);
     private final List<User> users;
 
     public ChickenDinnerFilter(List<User> users) {
@@ -23,19 +25,16 @@ public class ChickenDinnerFilter extends AbstractFilter<ParticipantAttributes, P
 
     @Override
     public List<ParticipantStats> filter(List<Pair<LocalDateTime, ParticipantAttributes>> toFilter) {
-
-        // TODO include LocalDateTime in sorting of filteredResultsList / filter based on it
         List<ParticipantStats> filteredResultsList = new ArrayList<>();
         logger.info(String.format("Size of list to filter: %s", toFilter.size()));
         for (Pair<LocalDateTime, ParticipantAttributes> pair : toFilter) {
             ParticipantAttributes participantAttributes = pair.getValue();
-            if (isChickenDinner(participantAttributes) && participantStatsOfPlayerInUserlist(participantAttributes) && validMatchDate()) {
+            if (isChickenDinner(participantAttributes) && participantStatsOfPlayerInUserlist(participantAttributes) && validMatchDate(pair.getKey(), previousUpdateTime)) {
                 filteredResultsList.add(participantAttributes.getParticipantStats());
                 logger.info(String.format("Adding participant attributes for %s", participantAttributes.getParticipantStats().getName()));
             }
         }
         logger.info(String.format("Size of list after filtering: %s", filteredResultsList.size()));
-
         return filteredResultsList;
     }
 
@@ -47,8 +46,7 @@ public class ChickenDinnerFilter extends AbstractFilter<ParticipantAttributes, P
         return users.stream().map(User::getName).collect(Collectors.toList()).contains(participantAttributes.getParticipantStats().getName());
     }
 
-    // TODO figure out exact filtering cases based on last update to dinner-board and which ReleventInfo's should be included in this update
-    private boolean validMatchDate() {
-        return true;
+    private boolean validMatchDate(LocalDateTime matchTime, LocalDateTime previousUpdateTime) {
+        return matchTime.isAfter(previousUpdateTime);
     }
 }
