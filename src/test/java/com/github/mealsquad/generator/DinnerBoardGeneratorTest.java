@@ -26,6 +26,7 @@ public class DinnerBoardGeneratorTest {
 
     @Before
     public void initialize() {
+
         RelevantInfo relevantInfo1 = RelevantInfo.builder()
                 .username("NutellaFrisbee")
                 .kills(1)
