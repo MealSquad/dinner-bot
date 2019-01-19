@@ -1,8 +1,10 @@
 plugins {
     id 'java'
+    id 'application'
 }
 
 group 'com.github.mealsquad'
+mainClassName = 'com.github.mealsquad.Bot'
 version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
@@ -19,7 +21,13 @@ dependencies {
     compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.1'
     compile "com.jakewharton.fliptables:fliptables:1.0.2"
     compile 'com.google.guava:guava:27.0.1-jre'
+    compileOnly 'org.projectlombok:lombok:1.18.4'
     implementation 'org.javacord:javacord:3.0.1'
     implementation 'com.github.mautini:pubgjava:master-SNAPSHOT'
     testImplementation 'org.mockito:mockito-core:2.7.22'
+}
+
+jar {
+    archiveBaseName = "dinner-bot"
+    version =  '0.1.0'
 }
