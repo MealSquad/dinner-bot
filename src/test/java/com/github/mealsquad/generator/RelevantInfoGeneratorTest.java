@@ -14,7 +14,14 @@ import static org.junit.Assert.assertEquals;
 public class RelevantInfoGeneratorTest {
 
     private final RelevantInfoGenerator sut = new RelevantInfoGenerator();
-    private final RelevantInfo relevantInfo = new RelevantInfo("NutellaFrisbee", 1, 2, 3, 4, 0);
+    private final RelevantInfo relevantInfo = RelevantInfo.builder()
+            .username("NutellaFrisbee")
+            .kills(1)
+            .wins(2)
+            .topKills(3)
+            .topHitPoints(4)
+            .dionDinners(0)
+            .build();
     private final ArrayList<String> before = new ArrayList<>();
 
     @Before

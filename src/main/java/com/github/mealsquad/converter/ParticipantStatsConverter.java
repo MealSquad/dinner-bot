@@ -12,11 +12,13 @@ public class ParticipantStatsConverter implements Function<ParticipantStats, Rel
     @Nullable
     @Override
     public RelevantInfo apply(@Nullable ParticipantStats input) {
-        return new RelevantInfo(input.getName(),
-                input.getKills(),
-                input.getWinPlace() == 1 ? 1 : 0,
-                input.getKills(),
-                input.getDamageDealt().intValue(),
-                (input.getWinPlace() == 1 && input.getDamageDealt() == 0) ? 1 : 0);
+        return RelevantInfo.builder()
+                .username(input.getName())
+                .kills(input.getKills())
+                .wins(input.getWinPlace() == 1 ? 1 : 0)
+                .topKills(input.getKills())
+                .topHitPoints(input.getDamageDealt().intValue())
+                .dionDinners((input.getWinPlace() == 1 && input.getDamageDealt() == 0) ? 1 : 0)
+                .build();
     }
 }
