@@ -1,42 +1,28 @@
 package com.github.mealsquad.model;
 
-import java.util.ArrayList;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
 public class DinnerBoard {
 
-    private Map<User, RelevantInfo> dinnerBoard;
-    private List<String> header;
-
-    public DinnerBoard() {
-        this(new HashMap<>(), new ArrayList<>());
-    }
-
-    public DinnerBoard(Map<User, RelevantInfo> dinnerBoard, List<String> header) {
-        this.dinnerBoard = dinnerBoard;
-        this.header = header;
-    }
-
-    public void setDinnerBoard(Map<User, RelevantInfo> dinnerBoard) {
-        this.dinnerBoard = dinnerBoard;
-    }
-
-    public void setHeader(List<String> header) {
-        this.header = header;
-    }
-
-    public Map<User, RelevantInfo> getDinnerBoard() {
-        return dinnerBoard;
-    }
+    private @Getter @Setter Map<User, RelevantInfo> dinnerBoard;
+    private @Setter List<String> header;
 
     public String[] getHeader() {
-        String[] arr = new String[6];
+        String[] arr = new String[header.size()];
         header.toArray(arr);
         return arr;
     }
@@ -53,18 +39,8 @@ public class DinnerBoard {
         return new DinnerBoard(newBoard, this.header);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        DinnerBoard that = (DinnerBoard) o;
-        return Objects.equals(header, that.header) &&
-                Objects.equals(dinnerBoard, that.dinnerBoard);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(header, dinnerBoard);
+    public void addPlayer(String username) {
+        dinnerBoard.put(new User(username), RelevantInfo.emptyRelevantInfo(username));
     }
 
     // TODO toString should return properly formatted for table like display
