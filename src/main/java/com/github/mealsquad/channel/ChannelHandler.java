@@ -27,7 +27,6 @@ public class ChannelHandler {
     private final String ME = "dinner-bot";
     private static final Logger logger = LogManager.getFormatterLogger();
     private DiscordApi api;
-    private String token;
     private String inputChannel;
     private String outputChannel;
     private Set<User> addBuffer;
@@ -35,8 +34,7 @@ public class ChannelHandler {
     private List<User> users;
 
     private ChannelHandler() {
-        this.token = ConfigReader.readProperties("token");
-        this.api = new DiscordApiBuilder().setToken(token).login().join();
+        this.api = new DiscordApiBuilder().setToken(ConfigReader.readProperties("token")).login().join();
         this.inputChannel = ConfigReader.readProperties("inputChannel");
         this.outputChannel = ConfigReader.readProperties("outputChannel");
         this.addBuffer = new HashSet<>();

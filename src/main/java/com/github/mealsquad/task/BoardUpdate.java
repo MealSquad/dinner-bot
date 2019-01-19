@@ -31,15 +31,7 @@ public class BoardUpdate extends AbstractUpdate implements Runnable {
         // Adds queried match information per user already present in table
         participantStats.stream().map(new ParticipantStatsConverter()).forEach(relevantInfo -> userSpecificRelevantInfo.put(relevantInfo.getUsername(), relevantInfo));
         Map<User, RelevantInfo> boardUpdate = new HashMap<>();
-        userSpecificRelevantInfo.keySet().forEach(key ->
-                boardUpdate.put(new User(key), RelevantInfo.builder()
-                        .username(key)
-                        .kills(0)
-                        .wins(0)
-                        .topKills(0)
-                        .topHitPoints(0)
-                        .dionDinners(0)
-                        .build()));
+        userSpecificRelevantInfo.keySet().forEach(key -> boardUpdate.put(new User(key), RelevantInfo.emptyRelevantInfo(key)));
         for (User key : boardUpdate.keySet()) {
             RelevantInfo currentInfo = boardUpdate.get(key);
             Set<RelevantInfo> updatedInfos = userSpecificRelevantInfo.get(key.getName());

@@ -33,7 +33,7 @@ public class Bot {
                 : initialDelay;
 
         scheduler.scheduleAtFixedRate(
-                new BoardUpdate(), TimeUnit.MINUTES.toMinutes(1), TimeUnit.MINUTES.toMinutes(1), TimeUnit.MINUTES);
+                new BoardUpdate(), delayTime, TimeUnit.MINUTES.toMinutes(1), TimeUnit.MINUTES);
     }
 
     public static void main(String[] args) {

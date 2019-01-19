@@ -19,6 +19,7 @@ public class ChickenDinnerFilter implements AbstractFilter<ParticipantAttributes
     private static final Logger logger = LogManager.getLogger();
     private final LocalDateTime previousUpdateTime = LocalDateTime.now().minus(24, ChronoUnit.HOURS);
     private List<User> users = ChannelHandler.getInstance().getUsers();
+    
     @Override
     public List<ParticipantStats> filter(List<Pair<LocalDateTime, ParticipantAttributes>> toFilter) {
         List<ParticipantStats> filteredResultsList = new ArrayList<>();
