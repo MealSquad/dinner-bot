@@ -1,6 +1,6 @@
 package com.github.mealsquad.filter;
 
-import javafx.util.Pair;
+import com.github.mealsquad.utility.Pair;
 
 import java.time.LocalDateTime;
 import java.util.List;

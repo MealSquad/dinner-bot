@@ -3,7 +3,7 @@ package com.github.mealsquad.filter;
 import com.github.mautini.pubgjava.model.participant.ParticipantAttributes;
 import com.github.mautini.pubgjava.model.participant.ParticipantStats;
 import com.github.mealsquad.model.User;
-import javafx.util.Pair;
+import com.github.mealsquad.utility.Pair;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -40,7 +40,7 @@ public class ChickenDinnerFilterTest {
     public void initialize() {
         List<User> users = new ArrayList<>();
         users.add(new User("NutellaFrisbee"));
-        sut = new ChickenDinnerFilter(users);
+        sut = new ChickenDinnerFilter();
 
         // Mocks
         validParticipant = mock(ParticipantAttributes.class, RETURNS_DEEP_STUBS);
