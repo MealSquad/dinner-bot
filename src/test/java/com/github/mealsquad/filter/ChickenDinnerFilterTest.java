@@ -2,6 +2,7 @@ package com.github.mealsquad.filter;
 
 import com.github.mautini.pubgjava.model.participant.ParticipantAttributes;
 import com.github.mautini.pubgjava.model.participant.ParticipantStats;
+import com.github.mealsquad.channel.ChannelHandler;
 import com.github.mealsquad.model.User;
 import com.github.mealsquad.utility.Pair;
 import org.junit.Before;
@@ -9,12 +10,14 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -28,6 +31,9 @@ public class ChickenDinnerFilterTest {
 
     // Subject Under Test
     private ChickenDinnerFilter sut;
+
+    @Mock
+    private ChannelHandler channelHandler;
 
     // Mocks
     private ParticipantAttributes validParticipant;
@@ -52,6 +58,8 @@ public class ChickenDinnerFilterTest {
 
         // Stubs for an invalid participant
         when(invalidParticipant.getParticipantStats().getWinPlace()).thenReturn(-1);
+
+        doReturn(new ArrayList<>(Arrays.asList(validParticipant, invalidParticipant))).when(channelHandler).getUsers();
 
     }
 
