@@ -2,17 +2,12 @@ package com.github.mealsquad.filter;
 
 import com.github.mautini.pubgjava.model.participant.ParticipantAttributes;
 import com.github.mautini.pubgjava.model.participant.ParticipantStats;
-import com.github.mealsquad.channel.ChannelHandler;
 import com.github.mealsquad.model.User;
-import com.github.mealsquad.utility.ConfigReader;
 import com.github.mealsquad.utility.Pair;
-import org.javacord.api.DiscordApiBuilder;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.junit.runners.JUnit4;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -22,9 +17,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest(ConfigReader.class)
-@PowerMockIgnore("javax.management.*")
+@RunWith(JUnit4.class)
 public class ChickenDinnerFilterTest {
     // Subject Under Test
     private ChickenDinnerFilter sut;
