@@ -2,7 +2,6 @@ package com.github.mealsquad.filter;
 
 import com.github.mautini.pubgjava.model.participant.ParticipantAttributes;
 import com.github.mautini.pubgjava.model.participant.ParticipantStats;
-import com.github.mealsquad.channel.ChannelHandler;
 import com.github.mealsquad.model.User;
 import com.github.mealsquad.utility.Pair;
 import org.apache.logging.log4j.LogManager;
@@ -18,8 +17,12 @@ public class ChickenDinnerFilter implements AbstractFilter<ParticipantAttributes
 
     private static final Logger logger = LogManager.getLogger();
     private final LocalDateTime previousUpdateTime = LocalDateTime.now().minus(24, ChronoUnit.HOURS);
-    private List<User> users = ChannelHandler.getInstance().getUsers();
-    
+    private List<User> users;
+
+    public ChickenDinnerFilter(List<User> users) {
+        this.users = users;
+    }
+
     @Override
     public List<ParticipantStats> filter(List<Pair<LocalDateTime, ParticipantAttributes>> toFilter) {
         List<ParticipantStats> filteredResultsList = new ArrayList<>();

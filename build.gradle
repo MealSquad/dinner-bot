@@ -17,14 +17,14 @@ repositories {
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile 'junit:junit:4.12'
+    testCompile group: 'org.mockito', name: 'mockito-all', version: '1.9.5'
     compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.11.1'
     compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.1'
     compile "com.jakewharton.fliptables:fliptables:1.0.2"
     compile 'com.google.guava:guava:27.0.1-jre'
     implementation 'org.javacord:javacord:3.0.1'
     implementation 'com.github.mautini:pubgjava:master-SNAPSHOT'
-    testImplementation 'org.mockito:mockito-core:2.7.22'
 }
 
 lombok { // optional: values below are the defaults

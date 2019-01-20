@@ -4,36 +4,30 @@ import com.github.mautini.pubgjava.model.participant.ParticipantAttributes;
 import com.github.mautini.pubgjava.model.participant.ParticipantStats;
 import com.github.mealsquad.channel.ChannelHandler;
 import com.github.mealsquad.model.User;
+import com.github.mealsquad.utility.ConfigReader;
 import com.github.mealsquad.utility.Pair;
+import org.javacord.api.DiscordApiBuilder;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
-@RunWith(JUnit4.class)
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(ConfigReader.class)
+@PowerMockIgnore("javax.management.*")
 public class ChickenDinnerFilterTest {
-
-    @Rule
-    public MockitoRule mockitoRule = MockitoJUnit.rule();
-
     // Subject Under Test
     private ChickenDinnerFilter sut;
-
-    @Mock
-    private ChannelHandler channelHandler;
 
     // Mocks
     private ParticipantAttributes validParticipant;
@@ -46,7 +40,7 @@ public class ChickenDinnerFilterTest {
     public void initialize() {
         List<User> users = new ArrayList<>();
         users.add(new User("NutellaFrisbee"));
-        sut = new ChickenDinnerFilter();
+        sut = new ChickenDinnerFilter(users);
 
         // Mocks
         validParticipant = mock(ParticipantAttributes.class, RETURNS_DEEP_STUBS);
@@ -58,9 +52,6 @@ public class ChickenDinnerFilterTest {
 
         // Stubs for an invalid participant
         when(invalidParticipant.getParticipantStats().getWinPlace()).thenReturn(-1);
-
-        doReturn(new ArrayList<>(Arrays.asList(validParticipant, invalidParticipant))).when(channelHandler).getUsers();
-
     }
 
     @Test

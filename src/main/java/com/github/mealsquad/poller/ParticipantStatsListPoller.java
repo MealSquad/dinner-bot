@@ -8,6 +8,7 @@ import com.github.mautini.pubgjava.model.match.MatchResponse;
 import com.github.mautini.pubgjava.model.participant.Participant;
 import com.github.mautini.pubgjava.model.participant.ParticipantAttributes;
 import com.github.mautini.pubgjava.model.participant.ParticipantStats;
+import com.github.mealsquad.channel.ChannelHandler;
 import com.github.mealsquad.filter.AbstractFilter;
 import com.github.mealsquad.filter.ChickenDinnerFilter;
 import com.github.mealsquad.utility.Pair;
@@ -27,7 +28,7 @@ public class ParticipantStatsListPoller extends AbstractPoller<ParticipantStats>
     private final AbstractFilter<ParticipantAttributes, ParticipantStats> filter;
 
     public ParticipantStatsListPoller() {
-        this.filter = new ChickenDinnerFilter();
+        this.filter = new ChickenDinnerFilter(ChannelHandler.getInstance().getUsers());
         this.matchList = new MatchSetPoller().poll();
     }
 
