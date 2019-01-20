@@ -31,6 +31,7 @@ application.conf
 .idea/**/dictionaries
 .idea/**/shelf
 .idea/codeStyles/
+.idea/compiler.xml
 
 # Generated files
 .idea/**/contentModel.xml

@@ -25,7 +25,14 @@ public class ParticipantStatsConverterTest {
         participantStats.setDamageDealt(110.1);
         participantStats.setName("NutellaFrisbee");
 
-        relevantInfo = new RelevantInfo("NutellaFrisbee", 2, 1, 2, 110,0);
+        relevantInfo = RelevantInfo.builder()
+                .username("NutellaFrisbee")
+                .kills(2)
+                .wins(1)
+                .topKills(2)
+                .topHitPoints(110)
+                .dionDinners(0)
+                .build();
     }
 
     @Test

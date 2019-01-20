@@ -1,7 +1,10 @@
 package com.github.mealsquad.model;
 
-import java.util.Objects;
+import lombok.Builder;
+import lombok.Value;
 
+@Value
+@Builder
 public class RelevantInfo {
 
     private String username;
@@ -10,43 +13,6 @@ public class RelevantInfo {
     private int topKills;
     private int topHitPoints;
     private int dionDinners;
-
-    public RelevantInfo(String username, Integer[] stats) {
-        this(username, stats[0], stats[1], stats[2], stats[3], stats[4]);
-    }
-
-    public RelevantInfo(String username, int kills, int wins, int topKills, int topHitPoints, int dionDinners) {
-        this.username = username;
-        this.kills = kills;
-        this.wins = wins;
-        this.topKills = topKills;
-        this.topHitPoints = topHitPoints;
-        this.dionDinners = dionDinners;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public int getKills() {
-        return kills;
-    }
-
-    public int getWins() {
-        return wins;
-    }
-
-    public int getTopKils() {
-        return topKills;
-    }
-
-    public int getTopHitPoints() {
-        return topHitPoints;
-    }
-
-    public int getDionDinners() {
-        return dionDinners;
-    }
 
     public RelevantInfo add(RelevantInfo other) {
         if (!this.username.equals(other.username)) {
@@ -58,24 +24,6 @@ public class RelevantInfo {
                 Integer.max(this.topKills, other.topKills),
                 Integer.max(this.topHitPoints, other.topHitPoints),
                 this.dionDinners + other.dionDinners);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        RelevantInfo that = (RelevantInfo) o;
-        return kills == that.kills &&
-                wins == that.wins &&
-                topKills == that.topKills &&
-                topHitPoints == that.topHitPoints &&
-                dionDinners == that.dionDinners &&
-                Objects.equals(username, that.username);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(username, kills, wins, topKills, topHitPoints, dionDinners);
     }
 
     @Override
@@ -93,5 +41,9 @@ public class RelevantInfo {
     public String[] toArray() {
         return  new String[]{username, String.valueOf(kills), String.valueOf(wins),
                 String.valueOf(topKills), String.valueOf(topHitPoints), String.valueOf(dionDinners)};
+    }
+
+    public static RelevantInfo emptyRelevantInfo(String username) {
+        return new RelevantInfo(username, 0, 0, 0, 0, 0);
     }
 }

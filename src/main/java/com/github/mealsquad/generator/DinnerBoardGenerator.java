@@ -21,9 +21,15 @@ public class DinnerBoardGenerator implements Function<List<String>, DinnerBoard>
         List<String> userData = strings.subList(6, strings.size());
         Map<User, RelevantInfo> dinnerInfo = new HashMap<>();
 
+        //TODO Need to find a way to Mock this getInstance() call for testing
+//        Set<String> usersToRemove = ChannelHandler.getInstance()
+//                .getRemoveBuffer().stream().map(User::getName).collect(Collectors.toSet());
         // Check edge cases
         for (int i = 0; i + 6 <= userData.size(); i = i + 6) {
             List<String> iso = userData.subList(i, i + 6);
+//            if (!usersToRemove.contains(userData.get(i))) {
+//                dinnerInfo.put(new User(userData.get(i)), rig.apply(iso));
+//            }
             dinnerInfo.put(new User(userData.get(i)), rig.apply(iso));
         }
         return new DinnerBoard(dinnerInfo, header);

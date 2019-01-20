@@ -10,11 +10,38 @@ import static org.junit.Assert.assertEquals;
 @RunWith(JUnit4.class)
 public class RelevantInfoAdditionTest {
 
-    private final RelevantInfo relevantInfo1 = new RelevantInfo("NutellaFrisbee", 1, 2, 3, 4, 0);
-    private final RelevantInfo relevantInfo2 = new RelevantInfo("NutellaFrisbee", 4, 3, 2, 1, 0);
-    private final RelevantInfo unsupported = new RelevantInfo("StygianWinter", 1, 2, 3, 4, 0);
-
-    private RelevantInfo added = new RelevantInfo("NutellaFrisbee", 5, 5, 3, 4, 0);
+    private final RelevantInfo relevantInfo1 = RelevantInfo.builder()
+            .username("NutellaFrisbee")
+            .kills(1)
+            .wins(2)
+            .topKills(3)
+            .topHitPoints(4)
+            .dionDinners(0)
+            .build();
+    private final RelevantInfo relevantInfo2 = RelevantInfo.builder()
+            .username("NutellaFrisbee")
+            .kills(4)
+            .wins(3)
+            .topKills(2)
+            .topHitPoints(1)
+            .dionDinners(0)
+            .build();
+    private final RelevantInfo unsupported = RelevantInfo.builder()
+            .username("StygianWinter")
+            .kills(5)
+            .wins(5)
+            .topKills(3)
+            .topHitPoints(4)
+            .dionDinners(0)
+            .build();
+    private final RelevantInfo added = RelevantInfo.builder()
+            .username("NutellaFrisbee")
+            .kills(5)
+            .wins(5)
+            .topKills(3)
+            .topHitPoints(4)
+            .dionDinners(0)
+            .build();
 
     @Test
     public void testRelevantInfoAdd() {

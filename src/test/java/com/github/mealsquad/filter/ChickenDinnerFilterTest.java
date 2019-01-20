@@ -3,14 +3,11 @@ package com.github.mealsquad.filter;
 import com.github.mautini.pubgjava.model.participant.ParticipantAttributes;
 import com.github.mautini.pubgjava.model.participant.ParticipantStats;
 import com.github.mealsquad.model.User;
-import javafx.util.Pair;
+import com.github.mealsquad.utility.Pair;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -22,10 +19,6 @@ import static org.mockito.Mockito.*;
 
 @RunWith(JUnit4.class)
 public class ChickenDinnerFilterTest {
-
-    @Rule
-    public MockitoRule mockitoRule = MockitoJUnit.rule();
-
     // Subject Under Test
     private ChickenDinnerFilter sut;
 
@@ -52,7 +45,6 @@ public class ChickenDinnerFilterTest {
 
         // Stubs for an invalid participant
         when(invalidParticipant.getParticipantStats().getWinPlace()).thenReturn(-1);
-
     }
 
     @Test

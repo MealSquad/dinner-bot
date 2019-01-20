@@ -8,8 +8,10 @@ import com.github.mautini.pubgjava.model.match.MatchResponse;
 import com.github.mautini.pubgjava.model.participant.Participant;
 import com.github.mautini.pubgjava.model.participant.ParticipantAttributes;
 import com.github.mautini.pubgjava.model.participant.ParticipantStats;
+import com.github.mealsquad.channel.ChannelHandler;
 import com.github.mealsquad.filter.AbstractFilter;
-import javafx.util.Pair;
+import com.github.mealsquad.filter.ChickenDinnerFilter;
+import com.github.mealsquad.utility.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,9 +27,9 @@ public class ParticipantStatsListPoller extends AbstractPoller<ParticipantStats>
     private final Set<Match> matchList;
     private final AbstractFilter<ParticipantAttributes, ParticipantStats> filter;
 
-    public ParticipantStatsListPoller(Set<Match> matchList, AbstractFilter<ParticipantAttributes, ParticipantStats> filter) {
-        this.matchList = matchList;
-        this.filter = filter;
+    public ParticipantStatsListPoller() {
+        this.filter = new ChickenDinnerFilter(ChannelHandler.getInstance().getUsers());
+        this.matchList = new MatchSetPoller().poll();
     }
 
     @Override
@@ -36,7 +38,7 @@ public class ParticipantStatsListPoller extends AbstractPoller<ParticipantStats>
         List<String> matchIds = matchList.stream().map(Match::getId).collect(Collectors.toList());
         try {
             for (String id : matchIds) {
-                matchResponses.add(getClient().getMatch(PlatformRegion.PC_NA, id));
+                matchResponses.add(pb.getMatch(PlatformRegion.PC_NA, id));
             }
         } catch (PubgClientException e) {
             logger.error("Failed to retrieve match responses");

@@ -26,8 +26,23 @@ public class DinnerBoardGeneratorTest {
 
     @Before
     public void initialize() {
-        RelevantInfo relevantInfo1 = new RelevantInfo("NutellaFrisbee", 1, 2, 3, 4, 0);
-        RelevantInfo relevantInfo2 = new RelevantInfo("StygianWinter", 4, 3, 2, 1, 0);
+
+        RelevantInfo relevantInfo1 = RelevantInfo.builder()
+                .username("NutellaFrisbee")
+                .kills(1)
+                .wins(2)
+                .topKills(3)
+                .topHitPoints(4)
+                .dionDinners(0)
+                .build();
+        RelevantInfo relevantInfo2 = RelevantInfo.builder()
+                .username("StygianWinter")
+                .kills(4)
+                .wins(3)
+                .topKills(2)
+                .topHitPoints(1)
+                .dionDinners(0)
+                .build();
         Map<User, RelevantInfo> backing = new HashMap<>();
         backing.put(new User(relevantInfo1.getUsername()), relevantInfo1);
         backing.put(new User(relevantInfo2.getUsername()), relevantInfo2);

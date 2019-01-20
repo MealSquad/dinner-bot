@@ -27,18 +27,60 @@ public class DinnerBoardAdditionTest {
 
     @Before
     public void initialize() {
-        RelevantInfo relevantInfo1 = new RelevantInfo("NutellaFrisbee", 1, 2, 3, 4, 0);
-        RelevantInfo relevantInfo2 = new RelevantInfo("StygianWinter", 4, 3, 2, 1, 0);
+        RelevantInfo relevantInfo1 = RelevantInfo.builder()
+                .username("NutellaFrisbee")
+                .kills(1)
+                .wins(2)
+                .topKills(3)
+                .topHitPoints(4)
+                .dionDinners(0)
+                .build();
+        RelevantInfo relevantInfo2 = RelevantInfo.builder()
+                .username("StygianWinter")
+                .kills(5)
+                .wins(5)
+                .topKills(3)
+                .topHitPoints(4)
+                .dionDinners(0)
+                .build();
         backing1.put(new User(relevantInfo1.getUsername()), relevantInfo1);
         backing1.put(new User(relevantInfo2.getUsername()), relevantInfo2);
 
-        RelevantInfo relevantInfo3 = new RelevantInfo("NutellaFrisbee", 5, 0, 5, 6, 0);
-        RelevantInfo relevantInfo4 = new RelevantInfo("StygianWinter", 7, 3, 1, 0, 0);
+        RelevantInfo relevantInfo3 = RelevantInfo.builder()
+                .username("NutellaFrisbee")
+                .kills(5)
+                .wins(0)
+                .topKills(5)
+                .topHitPoints(6)
+                .dionDinners(0)
+                .build();
+        RelevantInfo relevantInfo4 = RelevantInfo.builder()
+                .username("StygianWinter")
+                .kills(7)
+                .wins(3)
+                .topKills(1)
+                .topHitPoints(0)
+                .dionDinners(0)
+                .build();
         backing2.put(new User(relevantInfo3.getUsername()), relevantInfo3);
         backing2.put(new User(relevantInfo4.getUsername()), relevantInfo4);
 
-        RelevantInfo relevantInfo5 = new RelevantInfo("NutellaFrisbee", 6, 2, 5, 6, 0);
-        RelevantInfo relevantInfo6 = new RelevantInfo("StygianWinter", 11, 6, 2, 1, 0);
+        RelevantInfo relevantInfo5 = RelevantInfo.builder()
+                .username("NutellaFrisbee")
+                .kills(6)
+                .wins(2)
+                .topKills(5)
+                .topHitPoints(6)
+                .dionDinners(0)
+                .build();
+        RelevantInfo relevantInfo6 = RelevantInfo.builder()
+                .username("StygianWinter")
+                .kills(12)
+                .wins(8)
+                .topKills(3)
+                .topHitPoints(4)
+                .dionDinners(0)
+                .build();
         backing3.put(new User(relevantInfo5.getUsername()), relevantInfo5);
         backing3.put(new User(relevantInfo6.getUsername()), relevantInfo6);
 
