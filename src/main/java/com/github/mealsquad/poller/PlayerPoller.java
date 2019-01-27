@@ -1,5 +1,6 @@
 package com.github.mealsquad.poller;
 
+import com.github.mautini.pubgjava.api.PubgClient;
 import com.github.mautini.pubgjava.exception.PubgClientException;
 import com.github.mautini.pubgjava.model.Platform;
 import com.github.mautini.pubgjava.model.player.Player;
@@ -16,18 +17,22 @@ public class PlayerPoller extends AbstractPoller<Player> {
 
     private static final Logger logger = LogManager.getFormatterLogger();
 
+    public PlayerPoller(PubgClient pb) {
+        super(pb);
+    }
+
     @Override
     public List<Player> poll() {
+        ChannelHandler channelHandler = ChannelHandler.getInstance();
         List<Player> players = new ArrayList<>();
-        List<User> currentUsers = ChannelHandler.getInstance().getUsers();
-        Set<User> users = ChannelHandler.getInstance().getAddBuffer();
+        List<User> currentUsers = channelHandler.getUsers();
+        Set<User> users = channelHandler.getUserCache().getAddBuffer();
         users.addAll(currentUsers);
-        users.stream().map(User::getName).forEach(user -> {
+        users.stream().map(user -> channelHandler.getUserCache().get(user)).forEach(user -> {
             try {
-                //PAGINATE - request can only handle 6 people.  separate into single requests causes too many requests
-                players.addAll(pb.getPlayersByNames(Platform.STEAM, user).getData());
+                players.add(pb.getPlayer(Platform.STEAM, user).getData());
             } catch (PubgClientException e) {
-                logger.error("Failure to retrieve players");
+                logger.error("Failure to retrieve player %s", user);
                 e.printStackTrace();
             }
         });

@@ -6,7 +6,11 @@ import java.util.Collection;
 
 public abstract class AbstractPoller<T> {
 
-    protected static final PubgClient pb = new PubgClient();
+    protected PubgClient pb;
+
+    public AbstractPoller(PubgClient pb) {
+        this.pb = pb;
+    }
 
     public abstract Collection<T> poll();
 }
