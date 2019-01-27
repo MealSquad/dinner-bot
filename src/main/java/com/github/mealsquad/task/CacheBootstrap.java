@@ -40,5 +40,6 @@ public class CacheBootstrap extends AbstractUpdate {
                 e.printStackTrace();
             }
         });
+        logger.info("Cache bootstrapping complete");
     }
 }
