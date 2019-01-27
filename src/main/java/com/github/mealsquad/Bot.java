@@ -2,6 +2,7 @@ package com.github.mealsquad;
 
 import com.github.mealsquad.channel.ChannelHandler;
 import com.github.mealsquad.task.BoardUpdate;
+import com.github.mealsquad.task.CacheBootstrap;
 import com.github.mealsquad.task.CacheUpdate;
 import com.github.mealsquad.listeners.HelpListener;
 import com.github.mealsquad.listeners.UserListener;
@@ -54,7 +55,7 @@ public class Bot {
                 : cacheInitialDelay;
 
         // Fill cache when bot starts
-        scheduler.execute(new CacheUpdate());
+        scheduler.execute(new CacheBootstrap());
 
         scheduler.scheduleAtFixedRate(
                 new CacheUpdate(), cacheDelayTime, TimeUnit.HOURS.toMinutes(1), TimeUnit.MINUTES);
