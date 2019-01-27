@@ -1,10 +1,13 @@
 package com.github.mealsquad.channel;
 
-import com.github.mealsquad.model.DinnerBoard;
+import com.github.mautini.pubgjava.api.PubgClient;
+import com.github.mealsquad.cache.UserCache;
 import com.github.mealsquad.generator.DinnerBoardGenerator;
+import com.github.mealsquad.model.DinnerBoard;
 import com.github.mealsquad.model.User;
 import com.github.mealsquad.utility.ConfigReader;
 import com.jakewharton.fliptables.FlipTable;
+import com.github.mealsquad.listeners.AbstractListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.javacord.api.DiscordApi;
@@ -13,33 +16,27 @@ import org.javacord.api.DiscordApiBuilder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ChannelHandler {
 
     private static ChannelHandler singleton = null;
 
+    private final PubgClient pb = new PubgClient();
     private final String DINNER_BOARD_REGEX = "[^a-zA-Z0-9#]+ | ^[# of Dion Dinners] | ^[Top DPS/Game] | ^[Top Kills]";
     private final String BOOTSTRAP_DINNER_BOARD_REGEX = "-|---|\n";
-    private final String ME = "dinner-bot";
     private static final Logger logger = LogManager.getFormatterLogger();
     private DiscordApi api;
     private String inputChannel;
     private String outputChannel;
-    private Set<User> addBuffer;
-    private Set<User> removeBuffer;
-    private List<User> users;
+    private UserCache userCache;
 
     private ChannelHandler() {
         this.api = new DiscordApiBuilder().setToken(ConfigReader.readProperties("token")).login().join();
         this.inputChannel = ConfigReader.readProperties("inputChannel");
         this.outputChannel = ConfigReader.readProperties("outputChannel");
-        this.addBuffer = new HashSet<>();
-        this.removeBuffer = new HashSet<>();
-        this.users = new ArrayList<>();
+        this.userCache = new UserCache();
     }
 
     public static ChannelHandler getInstance() {
@@ -53,16 +50,12 @@ public class ChannelHandler {
         return singleton;
     }
 
-    public Set<User> getAddBuffer() {
-        Set<User> buffer = new HashSet<>(addBuffer);
-        addBuffer.clear();
-        return buffer;
+    public PubgClient getPb() {
+        return pb;
     }
 
-    public Set<User> getRemoveBuffer() {
-        Set<User> buffer = new HashSet<>(removeBuffer);
-        removeBuffer.clear();
-        return buffer;
+    public UserCache getUserCache() {
+        return userCache;
     }
 
     public DinnerBoard getCurrentDinnerBoard() {
@@ -102,32 +95,12 @@ public class ChannelHandler {
     }
 
     public List<User> getUsers() {
-        users = new ArrayList<>(getCurrentDinnerBoard().getDinnerBoard().keySet());
-        return users;
+        return new ArrayList<>(userCache.getUsers());
     }
 
-    public void addListeners() {
-        // Replace this with a module or class which handles all user input / bot output. Essentially a CLI
-        // Add a listener which answers with "Pong!" if someone writes "!ping"
-        logger.info("Adding listeners");
-
-        api.addMessageCreateListener(event -> {
-            if (!event.getMessageAuthor().getDisplayName().equals(ME)) {
-                if (event.getMessage().getContent().equalsIgnoreCase("!help")) {
-                    event.getChannel().sendMessage("Thank you for using dinner-bot!  If you want to be included on the dinner-board, please use the following command: ```!addUser pubgUserName```");
-                } else if (event.getMessage().getContent().contains("!addUser")) {
-                    String[] cmd = event.getMessageContent().split(" ");
-                    if (cmd.length > 2) {
-                        throw new UnsupportedOperationException("Unable to accept more than one username or a name containing a space");
-                    }
-                    String user = cmd[1];
-                    addBuffer.add(new User(user));
-
-
-                    logger.info("Adding %s to the dinner-board", user);
-                    event.getChannel().sendMessage(String.format("Added new user %s to the dinner-board", user));
-                }
-            }
-        });
+    public void addListeners(AbstractListener... listeners) {
+        for (AbstractListener listener : listeners) {
+            api.addMessageCreateListener(listener);
+        }
     }
 }

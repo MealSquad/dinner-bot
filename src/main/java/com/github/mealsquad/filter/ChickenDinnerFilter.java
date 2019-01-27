@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ChickenDinnerFilter implements AbstractFilter<ParticipantAttributes, ParticipantStats> {
+public class ChickenDinnerFilter implements Filter<ParticipantAttributes, ParticipantStats> {
 
     private static final Logger logger = LogManager.getLogger();
     private final LocalDateTime previousUpdateTime = LocalDateTime.now().minus(24, ChronoUnit.HOURS);

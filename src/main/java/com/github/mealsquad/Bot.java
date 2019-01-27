@@ -2,7 +2,9 @@ package com.github.mealsquad;
 
 import com.github.mealsquad.channel.ChannelHandler;
 import com.github.mealsquad.task.BoardUpdate;
-
+import com.github.mealsquad.task.CacheUpdate;
+import com.github.mealsquad.listeners.HelpListener;
+import com.github.mealsquad.listeners.UserListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,8 +23,17 @@ public class Bot {
         logger.info("Successfully join text channel");
         ChannelHandler channelHandler = ChannelHandler.getInstance();
 
-        channelHandler.addListeners();
+        channelHandler.addListeners(new HelpListener(), new UserListener());
 
+        scheduleTasks();
+    }
+
+    public static void main(String[] args) {
+        Bot me = new Bot();
+        me.start();
+    }
+
+    private void scheduleTasks() {
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
         final Long initialDelay = LocalDateTime.now().until(LocalDate.now().plusDays(1).atTime(12, 30),
@@ -33,11 +44,19 @@ public class Bot {
                 : initialDelay;
 
         scheduler.scheduleAtFixedRate(
-                new BoardUpdate(), delayTime, TimeUnit.MINUTES.toMinutes(1), TimeUnit.MINUTES);
-    }
+                new BoardUpdate(), delayTime, TimeUnit.DAYS.toMinutes(1), TimeUnit.MINUTES);
 
-    public static void main(String[] args) {
-        Bot me = new Bot();
-        me.start();
+        final Long cacheInitialDelay = LocalDateTime.now().until(LocalDate.now().plusDays(1).atTime(12, 30),
+                ChronoUnit.MINUTES);
+
+        Long cacheDelayTime = (initialDelay > TimeUnit.DAYS.toMinutes(1))
+                ? LocalDateTime.now().until(LocalDate.now().atTime(12, 25), ChronoUnit.MINUTES)
+                : cacheInitialDelay;
+
+        // Fill cache when bot starts
+        scheduler.execute(new CacheUpdate());
+
+        scheduler.scheduleAtFixedRate(
+                new CacheUpdate(), cacheDelayTime, TimeUnit.HOURS.toMinutes(1), TimeUnit.MINUTES);
     }
 }

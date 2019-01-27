@@ -1,5 +1,6 @@
 package com.github.mealsquad.poller;
 
+import com.github.mautini.pubgjava.api.PubgClient;
 import com.github.mautini.pubgjava.exception.PubgClientException;
 import com.github.mautini.pubgjava.model.PlatformRegion;
 import com.github.mautini.pubgjava.model.generic.Entity;
@@ -9,7 +10,7 @@ import com.github.mautini.pubgjava.model.participant.Participant;
 import com.github.mautini.pubgjava.model.participant.ParticipantAttributes;
 import com.github.mautini.pubgjava.model.participant.ParticipantStats;
 import com.github.mealsquad.channel.ChannelHandler;
-import com.github.mealsquad.filter.AbstractFilter;
+import com.github.mealsquad.filter.Filter;
 import com.github.mealsquad.filter.ChickenDinnerFilter;
 import com.github.mealsquad.utility.Pair;
 import org.apache.logging.log4j.LogManager;
@@ -25,11 +26,12 @@ public class ParticipantStatsListPoller extends AbstractPoller<ParticipantStats>
 
     private static final Logger logger = LogManager.getLogger();
     private final Set<Match> matchList;
-    private final AbstractFilter<ParticipantAttributes, ParticipantStats> filter;
+    private final Filter<ParticipantAttributes, ParticipantStats> filter;
 
-    public ParticipantStatsListPoller() {
+    public ParticipantStatsListPoller(PubgClient pb) {
+        super(pb);
         this.filter = new ChickenDinnerFilter(ChannelHandler.getInstance().getUsers());
-        this.matchList = new MatchSetPoller().poll();
+        this.matchList = new MatchSetPoller(pb).poll();
     }
 
     @Override

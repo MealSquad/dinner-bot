@@ -25,7 +25,7 @@ public class BoardUpdate extends AbstractUpdate implements Runnable {
         // Query for update to dinner-board
         logger.info("Starting board update");
 
-        List<ParticipantStats> participantStats = new ParticipantStatsListPoller().poll();
+        List<ParticipantStats> participantStats = new ParticipantStatsListPoller(channelHandler.getPb()).poll();
         // Map {User -> {Match1, match2, ...}}
         SetMultimap<String, RelevantInfo> userSpecificRelevantInfo = HashMultimap.create();
         // Adds queried match information per user already present in table
@@ -44,7 +44,9 @@ public class BoardUpdate extends AbstractUpdate implements Runnable {
 
         DinnerBoard update = new DinnerBoard(boardUpdate, headerInfo);
 
-        // Update the dinner board
-        channelHandler.postUpdatedDinnerBoard(update);
+        // Update the dinner board only if there is an actual difference
+        if (!update.equals(channelHandler.getCurrentDinnerBoard())) {
+            channelHandler.postUpdatedDinnerBoard(update);
+        }
     }
 }
