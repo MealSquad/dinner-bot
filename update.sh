@@ -5,10 +5,10 @@ if [ $(pgrep -f SCREEN) ]; then
 	kill -9 $(pgrep -f SCREEN)
 	screen -wipe
 fi
-cd Documents/dinner-bot
+cd /home/pi/Documents/dinner-bot
 
 # Start a new screen for this instance
 screen -dmS dinner-bot sh
 
 # Run build.sh
-screen -S dinner-bot -p 0 -X stuff $'./build.sh\n'
+screen -S dinner-bot -p 0 -X stuff $'./build.sh >> logs/update.log\n'
