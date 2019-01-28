@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 
 public class ParticipantStatsListPoller extends AbstractPoller<ParticipantStats> {
 
-    private static final Logger logger = LogManager.getLogger();
+    private static final Logger logger = LogManager.getFormatterLogger();
     private final Set<Match> matchList;
     private final Filter<ParticipantAttributes, ParticipantStats> filter;
 
@@ -38,13 +38,13 @@ public class ParticipantStatsListPoller extends AbstractPoller<ParticipantStats>
     public List<ParticipantStats> poll() {
         List<MatchResponse> matchResponses = new ArrayList<>();
         List<String> matchIds = matchList.stream().map(Match::getId).collect(Collectors.toList());
-        try {
-            for (String id : matchIds) {
+        for (String id : matchIds) {
+            try {
                 matchResponses.add(pb.getMatch(PlatformRegion.PC_NA, id));
+            } catch (PubgClientException e) {
+                logger.error("Failed to retrieve match responses for match with id: %s", id);
+                e.printStackTrace();
             }
-        } catch (PubgClientException e) {
-            logger.error("Failed to retrieve match responses");
-            e.printStackTrace();
         }
 
         List<Pair<LocalDateTime, ParticipantAttributes>> participantAttributes = new ArrayList<>();

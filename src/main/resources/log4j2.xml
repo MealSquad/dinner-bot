@@ -3,7 +3,7 @@
     <Appenders>
         <RollingFile
                 name="fileLogger"
-                fileName="logs\service.log"
+                fileName="logs/service.log"
                 filePattern="logs/service-%d{yyyy-MM-dd}.log">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5p %logger{1} - %msg%n"/>
             <Policies>
