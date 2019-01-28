@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Kill current running process
-if [ `pgrep -f SCREEN` ]; then
-	kill -9 `pgrep -f SCREEN`
+if [ $(pgrep -f SCREEN) ]; then
+	kill -9 $(pgrep -f SCREEN)
+	screen -wipe
 fi
-screen -wipe
 
 # Start a new screen for this instance
 screen -dmS dinner-bot sh
