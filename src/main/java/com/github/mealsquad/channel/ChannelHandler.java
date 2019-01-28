@@ -64,7 +64,7 @@ public class ChannelHandler {
                     .get(0).getMessages(1).get().getNewestMessage().get().getContent());
             return new DinnerBoardGenerator().apply(rawDinnerBoard);
         } catch (Exception e) {
-            logger.warn("Failure to retrieve dinner-board");
+            logger.error("Failure to retrieve dinner-board");
             e.printStackTrace();
         }
         return new DinnerBoard(new HashMap<>(), new ArrayList<>());
@@ -72,6 +72,9 @@ public class ChannelHandler {
 
     private List<String> splitDinnerBoard(String board) {
         boolean bootstrapBoard = !board.contains("`");
+        if (bootstrapBoard) {
+            logger.info("Bootstrapping dinner-board state");
+        }
         List<String> extractStats = Arrays.stream(board.replaceAll(bootstrapBoard
                 ? BOOTSTRAP_DINNER_BOARD_REGEX
                 : DINNER_BOARD_REGEX, "+").split("[+]"))

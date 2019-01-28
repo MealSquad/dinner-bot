@@ -17,16 +17,21 @@ public class CacheUpdate extends AbstractUpdate {
 
     @Override
     public void run() {
+        logger.info("Starting Cache update");
         List<String> players = channelHandler.getUserCache().getAddBuffer().stream().map(User::getName).collect(Collectors.toList());
         String[] playerarr = new String[players.size()];
         players.toArray(playerarr);
         List<Player> playerInfos = new ArrayList<>();
-        try {
-            playerInfos = channelHandler.getPb().getPlayersByNames(Platform.STEAM, playerarr).getData();
-        } catch (PubgClientException e) {
-            for (String name : playerarr) {
-                logger.info("Failed to retrieve players information for cache update for players %s", name);
-                e.printStackTrace();
+        if (players.isEmpty()) {
+            logger.info("No new players to add to cache");
+        } else {
+            try {
+                playerInfos = channelHandler.getPb().getPlayersByNames(Platform.STEAM, playerarr).getData();
+            } catch (PubgClientException e) {
+                for (String name : playerarr) {
+                    logger.error("Failed to retrieve players information for cache update for players %s", name);
+                    e.printStackTrace();
+                }
             }
         }
         playerInfos.forEach(player -> channelHandler.getUserCache().put(new User(player.getPlayerAttributes().getName()), player.getId()));
