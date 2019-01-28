@@ -5,7 +5,7 @@ import lombok.Value;
 
 @Value
 @Builder
-public class RelevantInfo {
+public class RelevantInfo implements Comparable<RelevantInfo> {
 
     private String username;
     private int kills;
@@ -45,5 +45,10 @@ public class RelevantInfo {
 
     public static RelevantInfo emptyRelevantInfo(String username) {
         return new RelevantInfo(username, 0, 0, 0, 0, 0);
+    }
+
+    @Override
+    public int compareTo(RelevantInfo other) {
+        return Integer.compare(this.getKills(), other.getKills());
     }
 }
