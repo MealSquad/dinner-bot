@@ -12,6 +12,7 @@ public class UserListener extends AbstractListener {
 
     @Override
     public void addMessageDetails(MessageCreateEvent event) {
+        logger.info("Creating user listener");
         if (event.getMessage().getContent().contains("!addUser")) {
             String[] cmd = event.getMessageContent().split(" ");
             if (cmd.length > 2) {

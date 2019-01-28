@@ -18,6 +18,7 @@ public class CacheBootstrap extends AbstractUpdate {
 
     @Override
     public void run() {
+        logger.info("Cache Bootstrapping started");
         List<String> currentPlayers = channelHandler.getCurrentDinnerBoard().getDinnerBoard().keySet().stream()
                 .map(User::getName).collect(Collectors.toList());
         List<List<String>> paginatedRequest = Lists.partition(currentPlayers, PARTITION_SIZE);
