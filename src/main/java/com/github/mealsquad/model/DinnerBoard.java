@@ -8,10 +8,14 @@ import lombok.Setter;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static java.util.Map.Entry.comparingByValue;
+import static java.util.stream.Collectors.toMap;
 
 @EqualsAndHashCode
 @NoArgsConstructor
@@ -36,7 +40,14 @@ public class DinnerBoard {
         Map<User, RelevantInfo> newBoard = new HashMap<>();
         this.dinnerBoard.keySet().stream()
                 .forEach(user -> newBoard.put(user, intersection.contains(user) ? this.dinnerBoard.get(user).add(other.dinnerBoard.get(user)) : this.dinnerBoard.get(user)));
-        return new DinnerBoard(newBoard, this.header);
+        return new DinnerBoard(newBoard, this.header).sort();
+    }
+
+    private DinnerBoard sort() {
+        this.dinnerBoard = this.dinnerBoard.entrySet().stream()
+                .sorted(comparingByValue())
+                .collect(toMap(Map.Entry::getKey, Map.Entry::getValue, (k, v) -> k, LinkedHashMap::new));
+        return this;
     }
 
     public void addPlayer(String username) {
