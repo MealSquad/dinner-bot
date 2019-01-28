@@ -21,7 +21,7 @@ public class MatchSetPoller extends AbstractPoller<Match> {
         PlayerPoller playerPoller = new PlayerPoller(pb);
         Set<Match> matchSet = new HashSet<>();
         playerPoller.poll().forEach(player -> {
-            logger.info("Adding %i matches for player %s",
+            logger.info("Adding %s matches for player %s",
                     player.getPlayerRelationships().getMatches().getData().size(),
                     player.getPlayerAttributes().getName());
             matchSet.addAll(player.getPlayerRelationships().getMatches().getData());

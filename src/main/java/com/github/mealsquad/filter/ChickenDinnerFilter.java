@@ -26,7 +26,7 @@ public class ChickenDinnerFilter implements Filter<ParticipantAttributes, Partic
     @Override
     public List<ParticipantStats> filter(List<Pair<LocalDateTime, ParticipantAttributes>> toFilter) {
         List<ParticipantStats> filteredResultsList = new ArrayList<>();
-        logger.info("Size of list to filter: %i", toFilter.size());
+        logger.info("Size of list to filter: %s", toFilter.size());
         for (Pair<LocalDateTime, ParticipantAttributes> pair : toFilter) {
             ParticipantAttributes participantAttributes = pair.getValue();
             if (isChickenDinner(participantAttributes) && participantStatsOfPlayerInUserlist(participantAttributes) && validMatchDate(pair.getKey(), previousUpdateTime)) {
@@ -34,7 +34,7 @@ public class ChickenDinnerFilter implements Filter<ParticipantAttributes, Partic
                 logger.info("Adding participant attributes for %s", participantAttributes.getParticipantStats().getName());
             }
         }
-        logger.info("Size of list after filtering: %i", filteredResultsList.size());
+        logger.info("Size of list after filtering: %s", filteredResultsList.size());
         return filteredResultsList;
     }
 
