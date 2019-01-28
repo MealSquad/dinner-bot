@@ -5,6 +5,7 @@ if [ $(pgrep -f SCREEN) ]; then
 	kill -9 $(pgrep -f SCREEN)
 	screen -wipe
 fi
+cd Documents/dinner-bot
 
 # Start a new screen for this instance
 screen -dmS dinner-bot sh
