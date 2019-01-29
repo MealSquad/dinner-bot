@@ -49,6 +49,6 @@ public class RelevantInfo implements Comparable<RelevantInfo> {
 
     @Override
     public int compareTo(RelevantInfo other) {
-        return Integer.compare(this.getKills(), other.getKills());
+        return Integer.compare(this.getWins(), other.getWins());
     }
 }

@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -45,16 +46,10 @@ public class DinnerBoard {
 
     private DinnerBoard sort() {
         this.dinnerBoard = this.dinnerBoard.entrySet().stream()
-                .sorted(comparingByValue())
+                .sorted(Collections.reverseOrder(comparingByValue()))
                 .collect(toMap(Map.Entry::getKey, Map.Entry::getValue, (k, v) -> k, LinkedHashMap::new));
         return this;
     }
-
-    public void addPlayer(String username) {
-        dinnerBoard.put(new User(username), RelevantInfo.emptyRelevantInfo(username));
-    }
-
-    // TODO toString should return properly formatted for table like display
 
     @Override
     public String toString() {
