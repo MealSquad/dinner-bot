@@ -9,13 +9,13 @@
             <Policies>
                 <TimeBasedTriggeringPolicy />
             </Policies>
+            <DefaultRolloverStrategy>
+                <Delete basePath="logs/">
+                    <IfFileName glob="service-*.log.gz" />
+                    <IfLastModified age="5d" />
+                </Delete>
+            </DefaultRolloverStrategy>
         </RollingFile>
-        <DefaultRolloverStrategy>
-            <Delete basePath="logs/">
-                <IfFileName glob="service-*.log.gz" />
-                <IfLastModified age="5d" />
-            </Delete>
-        </DefaultRolloverStrategy>
     </Appenders>
     <Loggers>
         <Root level="info">'
