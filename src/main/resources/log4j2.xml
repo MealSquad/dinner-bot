@@ -4,12 +4,18 @@
         <RollingFile
                 name="fileLogger"
                 fileName="logs/service.log"
-                filePattern="logs/service-%d{yyyy-MM-dd}.log">
+                filePattern="logs/service-%d{yyyy-MM-dd}.log.gz">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5p %logger{1} - %msg%n"/>
             <Policies>
                 <TimeBasedTriggeringPolicy />
             </Policies>
         </RollingFile>
+        <DefaultRolloverStrategy>
+            <Delete basePath="logs/">
+                <IfFileName glob="service-*.log.gz" />
+                <IfLastModified age="5d" />
+            </Delete>
+        </DefaultRolloverStrategy>
     </Appenders>
     <Loggers>
         <Root level="info">'
