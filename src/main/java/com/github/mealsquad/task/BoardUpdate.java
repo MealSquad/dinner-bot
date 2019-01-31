@@ -11,8 +11,8 @@ import com.google.common.collect.SetMultimap;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -25,7 +25,7 @@ public class BoardUpdate extends AbstractUpdate implements Runnable {
         // Query for update to dinner-board
         logger.info("Starting board update");
 
-        List<ParticipantStats> participantStats = new ParticipantStatsListPoller(channelHandler.getPb()).poll();
+        Collection<ParticipantStats> participantStats = new ParticipantStatsListPoller(channelHandler.getPb()).poll();
         // Map {User -> {Match1, match2, ...}}
         SetMultimap<String, RelevantInfo> userSpecificRelevantInfo = HashMultimap.create();
         // Adds queried match information per user already present in table
@@ -37,8 +37,8 @@ public class BoardUpdate extends AbstractUpdate implements Runnable {
             Set<RelevantInfo> updatedInfos = userSpecificRelevantInfo.get(key.getName());
             for (RelevantInfo ri : updatedInfos) {
                 currentInfo = currentInfo.add(ri);
-                logger.info("Updating dinner-board information for %s", ri.getUsername());
             }
+            logger.info("Updating dinner-board information for %s", key.getName());
             boardUpdate.put(key, currentInfo);
         }
 

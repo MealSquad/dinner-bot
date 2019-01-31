@@ -1,11 +1,7 @@
 package com.github.mealsquad.filter;
 
-import com.github.mealsquad.utility.Pair;
-
-import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Collection;
 
 public interface Filter<T, F> {
-
-    List<F> filter(List<Pair<LocalDateTime, T>> toFilter);
+    Collection<F> filter(Collection<T> toFilter);
 }
