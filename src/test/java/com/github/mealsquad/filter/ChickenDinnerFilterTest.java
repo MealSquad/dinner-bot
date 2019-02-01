@@ -3,13 +3,15 @@ package com.github.mealsquad.filter;
 import com.github.mautini.pubgjava.model.participant.ParticipantAttributes;
 import com.github.mautini.pubgjava.model.participant.ParticipantStats;
 import com.github.mealsquad.model.User;
+import com.github.mealsquad.utility.Pair;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -23,6 +25,9 @@ public class ChickenDinnerFilterTest {
     // Mocks
     private ParticipantAttributes validParticipant;
     private ParticipantAttributes invalidParticipant;
+
+    private final LocalDateTime validDate = LocalDateTime.now();
+    private final LocalDateTime invalidDate = LocalDateTime.now().minus(25, ChronoUnit.HOURS);
 
     @Before
     public void initialize() {
@@ -45,13 +50,24 @@ public class ChickenDinnerFilterTest {
     @Test
     public void testFilter() {
         // Mock a List<MatchResponses> with size 2.
-        List<ParticipantAttributes> participantAttributes = new ArrayList<>();
-        participantAttributes.add(validParticipant);
-        participantAttributes.add(invalidParticipant);
+        List<Pair<LocalDateTime, ParticipantAttributes>> participantAttributes = new ArrayList<>();
+        participantAttributes.add(new Pair<>(validDate, validParticipant));
+        participantAttributes.add(new Pair<>(validDate, invalidParticipant));
 
-        Collection<ParticipantStats> participantStats = sut.filter(participantAttributes);
+        List<ParticipantStats> participantStats = sut.filter(participantAttributes);
 
         // Assert only one set of participant stats (the valid one) passes through the filter
         assertEquals(1, participantStats.size());
+    }
+
+    @Test
+    public void testMatchWithInvalidDateExpectNoUpdate() {
+        List<Pair<LocalDateTime, ParticipantAttributes>> participantAttributes = new ArrayList<>();
+        participantAttributes.add(new Pair<>(invalidDate, validParticipant));
+        participantAttributes.add(new Pair<>(invalidDate, invalidParticipant));
+
+        List<ParticipantStats> participantStats = sut.filter(participantAttributes);
+
+        assertEquals(0, participantStats.size());
     }
 }

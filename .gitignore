@@ -21,7 +21,7 @@ application.conf
 *_REMOTE_*.txt
 
 ### Logs ###
-*.log.gz
+*.log
 
 ### Intellij ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and WebStorm
